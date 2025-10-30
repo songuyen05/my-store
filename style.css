@@ -73,3 +73,25 @@ button:hover {
   font-weight: bold;
   text-shadow: 0 0 10px blue, 0 0 20px yellow;
 }
+
+#product-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.product-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  padding: 20px;
+  text-align: center;
+  width: 300px;
+}
+
+.product-card img {
+  max-width: 100%;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
