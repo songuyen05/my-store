@@ -3,17 +3,17 @@ const productList = document.getElementById("product-list");
 const products = [
   {
     title: "Pokémon Cards",
-    image: "images/frontPage.png",
+    image: "images/PokemonCards.png",
     id: "pokemon-cards",
   },
   {
     title: "Full Arts",
-    image: "images/fullArts.png",
+    image: "images/FullArt.jpg",
     id: "full-arts",
   },
   {
     title: "EX / Mega",
-    image: "images/exMega.png",
+    image: "images/EX-Mega.jpg",
     id: "ex-mega",
   },
 ];
