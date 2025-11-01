@@ -33,7 +33,7 @@ products.forEach(product => {
 });
 
 // Temporary placeholder for later
-document.getElementById("view-all").addEventListener("click", () => {
+document.getElementById("view-pokemon-cards").addEventListener("click", () => {
   alert("This will take you to the Pokémon Cards page soon!");
 });
 
