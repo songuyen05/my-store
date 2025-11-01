@@ -26,7 +26,7 @@ products.forEach(product => {
   card.innerHTML = `
     <img src="${product.image}" alt="${product.title}">
     <h3>${product.title}</h3>
-    <button id="view-all">View All</button>
+    <button id="view-${product.id}">View All</button>
   `;
 
   productList.appendChild(card);
