@@ -34,13 +34,13 @@ products.forEach(product => {
 
 // Temporary placeholder for later
 document.getElementById("view-pokemon-cards").addEventListener("click", () => {
-  alert("This will take you to the Pokémon Cards page soon!");
+  window.location.href = "pokemon.html";
 });
 
 document.getElementById("view-full-arts").addEventListener("click", () => {
-  alert("This will take you to the Full Arts page soon!");
+  window.location.href = "fullarts.html";
 });
 
 document.getElementById("view-ex-mega").addEventListener("click", () => {
-  alert("This will take you to the EX/Mega page soon!");
+  window.location.href = "exmega.html";
 });
