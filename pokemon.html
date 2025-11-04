@@ -12,9 +12,19 @@
     <h1 class="title">All Pokémon Cards</h1>
   </header>
 
-  <main id="pokemon-list">
-    <p>Here’s where all your Pokémon cards for sale will appear!</p>
-    <!-- Later we’ll dynamically load card listings here -->
-  </main>
+  <main id="card-list"></main>
+
+<!-- Modal for viewing card details -->
+<div id="card-modal" class="modal">
+  <div class="modal-content">
+    <span class="close">&times;</span>
+    <img id="modal-img" src="" alt="Card Image">
+    <h2 id="modal-name"></h2>
+    <p id="modal-type"></p>
+    <p id="modal-price"></p>
+    <p id="modal-desc"></p>
+  </div>
+</div>
+  <script src="pokemon.js"></script>
 </body>
 </html>
