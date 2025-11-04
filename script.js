@@ -45,33 +45,6 @@ document.getElementById("view-ex-mega").addEventListener("click", () => {
   window.location.href = "exmega.html";
 });
 
-const cards = [
-  {
-    name: "Charizard",
-    image: "images/charizard.jpg",
-    type: "EX / Fire",
-    price: "$25.99",
-    desc: "A powerful Fire-type Pokémon with blazing attacks.",
-    category: "exmega"
-  },
-  {
-    name: "Pikachu Full Art",
-    image: "images/pikachu_fullart.jpg",
-    type: "Full Art / Electric",
-    price: "$15.00",
-    desc: "Full Art Pikachu with stunning artwork and great condition.",
-    category: "fullart"
-  }
-  {
-    name: "Squirtle",
-    image: "images/squirtle.jpg",
-    type: "Water",
-    price: "$5.00",
-    desc: "A classic Water-type Pokémon card.",
-    category: "normal"
-  }
-];
-
 const cardList = document.getElementById("card-list");
 const modal = document.getElementById("card-modal");
 const modalImg = document.getElementById("modal-img");
@@ -81,8 +54,21 @@ const modalPrice = document.getElementById("modal-price");
 const modalDesc = document.getElementById("modal-desc");
 const closeBtn = document.querySelector(".close");
 
-// Create cards dynamically
-cards.forEach(card => {
+// Determine which page we're on
+let category = "all";
+if (window.location.pathname.includes("fullarts.html")) {
+  category = "fullart";
+} else if (window.location.pathname.includes("exmega.html")) {
+  category = "exmega";
+}
+
+// Filter cards
+const filteredCards = category === "all"
+  ? cards
+  : cards.filter(card => card.category === category);
+
+// Render filtered cards
+filteredCards.forEach(card => {
   const div = document.createElement("div");
   div.classList.add("card-item");
   div.innerHTML = `
