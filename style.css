@@ -180,7 +180,7 @@ footer a:hover {
 #card-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 20px;
   padding: 20px;
 }
@@ -190,7 +190,8 @@ footer a:hover {
   border-radius: 15px;
   box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   text-align: center;
-  width: 250px;
+  flex: 1 1 250px;
+  max-width: 300px;
   overflow: hidden;
   transition: transform 0.2s ease;
 }
