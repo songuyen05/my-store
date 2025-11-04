@@ -34,8 +34,21 @@ const modalPrice = document.getElementById("modal-price");
 const modalDesc = document.getElementById("modal-desc");
 const closeBtn = document.querySelector(".close");
 
-// Create cards dynamically
-cards.forEach(card => {
+// Determine which page we're on
+let category = "all";
+if (window.location.pathname.includes("fullarts.html")) {
+  category = "fullart";
+} else if (window.location.pathname.includes("exmega.html")) {
+  category = "exmega";
+}
+
+// Filter cards
+const filteredCards = category === "all"
+  ? cards
+  : cards.filter(card => card.category === category);
+
+// Render filtered cards
+filteredCards.forEach(card => {
   const div = document.createElement("div");
   div.classList.add("card-item");
   div.innerHTML = `
