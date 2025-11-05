@@ -44,3 +44,5 @@ document.getElementById("view-full-arts").addEventListener("click", () => {
 document.getElementById("view-ex-mega").addEventListener("click", () => {
   window.location.href = "exmega.html";
 });
+
+
