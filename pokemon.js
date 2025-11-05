@@ -42,31 +42,44 @@ if (window.location.pathname.includes("fullarts.html")) {
   category = "exmega";
 }
 
-// Filter cards
-const filteredCards = category === "all"
-  ? cards
-  : cards.filter(card => card.category === category);
 
-// Render filtered cards
-filteredCards.forEach(card => {
-  const div = document.createElement("div");
-  div.classList.add("card-item");
-  div.innerHTML = `
-    <img src="${card.image}" alt="${card.name}">
-    <h3>${card.name}</h3>
-    <button class="view-btn">View</button>
-  `;
-  cardList.appendChild(div);
+// Function to render cards dynamically
+function renderCards(list) {
+  cardList.innerHTML = "";
+  
+  list.forEach(card => {
+    const div = document.createElement("div");
+    div.classList.add("card-item");
+    div.innerHTML = `
+      <img src="${card.image}" alt="${card.name}">
+      <h3>${card.name}</h3>
+      <button class="view-btn">View</button>
+    `;
+    cardList.appendChild(div);
 
-  // Add event listener for View button
-  div.querySelector(".view-btn").addEventListener("click", () => {
-    modalImg.src = card.image;
-    modalName.textContent = card.name;
-    modalType.textContent = `Type: ${card.type}`;
-    modalPrice.textContent = `Price: ${card.price}`;
-    modalDesc.textContent = card.desc;
-    modal.style.display = "flex";
+    // Add event listener for View button
+    div.querySelector(".view-btn").addEventListener("click", () => {
+      modalImg.src = card.image;
+      modalName.textContent = card.name;
+      modalType.textContent = `Type: ${card.type}`;
+      modalPrice.textContent = `Price: ${card.price}`;
+      modalDesc.textContent = card.desc;
+      modal.style.display = "flex";
+    });
   });
+}
+
+// Initial render
+renderCards(filteredCards);
+
+// Search functionality
+searchBar.addEventListener("input", e => {
+  const term = e.target.value.toLowerCase();
+  const filtered = filteredCards.filter(card =>
+    card.name.toLowerCase().includes(term) ||
+    card.type.toLowerCase().includes(term)
+  );
+  renderCards(filtered);
 });
 
 // Close modal
