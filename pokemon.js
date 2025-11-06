@@ -26,6 +26,7 @@ const cards = [
 ];
 
 const cardList = document.getElementById("card-list");
+const searchBar = document.getElementById("search-bar");
 const modal = document.getElementById("card-modal");
 const modalImg = document.getElementById("modal-img");
 const modalName = document.getElementById("modal-name");
@@ -41,6 +42,11 @@ if (window.location.pathname.includes("fullarts.html")) {
 } else if (window.location.pathname.includes("exmega.html")) {
   category = "exmega";
 }
+
+// Filter cards based on the page category
+const filteredCards = category === "all"
+  ? cards
+  : cards.filter(card => card.category === category);
 
 
 // Function to render cards dynamically
