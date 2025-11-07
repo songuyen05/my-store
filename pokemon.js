@@ -59,6 +59,12 @@ function renderCards(list) {
   list.forEach(card => {
     const div = document.createElement("div");
     div.classList.add("card-item");
+
+    // Show SOLD OUT overlay if quantity is 0
+    const soldOutHTML = card.quantity === 0
+      ? `<div class="sold-out">SOLD OUT</div>`
+      : `<div class="quantity">Quantity: ${card.quantity}</div>`;
+
     div.innerHTML = `
       <img src="${card.image}" alt="${card.name}">
       <h3>${card.name}</h3>
@@ -67,14 +73,16 @@ function renderCards(list) {
     cardList.appendChild(div);
 
     // Add event listener for View button
-    div.querySelector(".view-btn").addEventListener("click", () => {
-      modalImg.src = card.image;
-      modalName.textContent = card.name;
-      modalType.textContent = `Type: ${card.type}`;
-      modalPrice.textContent = `Price: ${card.price}`;
-      modalDesc.textContent = card.desc;
-      modal.style.display = "flex";
-    });
+    if (card.quantity > 0) {
+      div.querySelector(".view-btn").addEventListener("click", () => {
+        modalImg.src = card.image;
+        modalName.textContent = card.name;
+        modalType.textContent = `Type: ${card.type}`;
+        modalPrice.textContent = `Price: ${card.price}`;
+        modalDesc.textContent = card.desc;
+        modal.style.display = "flex";
+      });
+    }
   });
 }
 
