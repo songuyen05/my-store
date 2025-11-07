@@ -5,7 +5,8 @@ const cards = [
     type: "EX / Fire",
     price: "$25.99",
     desc: "A powerful Fire-type Pokémon with blazing attacks.",
-    category: "exmega"
+    category: "exmega",
+    quantity: 3
   },
   {
     name: "Pikachu Full Art",
@@ -13,7 +14,8 @@ const cards = [
     type: "Full Art / Electric",
     price: "$15.00",
     desc: "Full Art Pikachu with stunning artwork and great condition.",
-    category: "fullart"
+    category: "fullart",
+    quantity: 0
   },
   {
     name: "Squirtle",
@@ -21,7 +23,8 @@ const cards = [
     type: "Water",
     price: "$5.00",
     desc: "A classic Water-type Pokémon card.",
-    category: "normal"
+    category: "normal",
+    quantity: 1
   }
 ];
 
