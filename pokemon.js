@@ -63,12 +63,20 @@ function renderCards(list) {
     // Show SOLD OUT overlay if quantity is 0
     const soldOutHTML = card.quantity === 0
       ? `<div class="sold-out">SOLD OUT</div>`
-      : `<div class="quantity">Quantity: ${card.quantity}</div>`;
+      : "";
+
+      // Insert quantity below the card name
+    const quantityHTML = card.quantity > 0
+      ? `<div class="quantity">Quantity: ${card.quantity}</div>`
+      : "";
 
     div.innerHTML = `
-      ${soldOutHTML}
-      <img src="${card.image}" alt="${card.name}">
+      <div class="image-container">
+        ${soldOutHTML}
+        <img src="${card.image}" alt="${card.name}">
+      </div>
       <h3>${card.name}</h3>
+      ${quantityHTML}
       <button class="view-btn">View</button>
     `;
     cardList.appendChild(div);
