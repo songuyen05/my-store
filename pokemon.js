@@ -66,6 +66,7 @@ function renderCards(list) {
       : `<div class="quantity">Quantity: ${card.quantity}</div>`;
 
     div.innerHTML = `
+      ${soldOutHTML}
       <img src="${card.image}" alt="${card.name}">
       <h3>${card.name}</h3>
       <button class="view-btn">View</button>
