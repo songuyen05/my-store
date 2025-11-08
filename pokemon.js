@@ -73,7 +73,7 @@ function renderCards(list) {
     div.innerHTML = `
       <div class="image-container">
         ${soldOutHTML}
-        <img src="${card.image}" alt="${card.name}">
+        <img src="${card.image}" alt="">
       </div>
       <h3>${card.name}</h3>
       ${quantityHTML}
