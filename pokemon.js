@@ -51,6 +51,19 @@ const filteredCards = category === "all"
   ? cards
   : cards.filter(card => card.category === category);
 
+// 🛒 Load cart from localStorage or create new
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+function addToCart(card) {
+  const existing = cart.find(item => item.name === card.name);
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({ ...card, quantity: 1 });
+  }
+  localStorage.setItem("cart", JSON.stringify(cart));
+  alert(`${card.name} added to cart!`);
+}
 
 // Function to render cards dynamically
 function renderCards(list) {
@@ -78,6 +91,7 @@ function renderCards(list) {
       <h3>${card.name}</h3>
       ${quantityHTML}
       <button class="view-btn">View</button>
+      <button class="cart-btn" ${card.quantity === 0 ? "disabled" : ""}>Add to Cart</button>
     `;
     cardList.appendChild(div);
 
@@ -91,6 +105,9 @@ function renderCards(list) {
         modalDesc.textContent = card.desc;
         modal.style.display = "flex";
       });
+
+      const cartBtn = div.querySelector(".cart-btn");
+      cartBtn.addEventListener("click", () => addToCart(card));
     }
   });
 }
