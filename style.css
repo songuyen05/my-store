@@ -295,3 +295,20 @@ footer a:hover {
 .image-container {
   position: relative;
 }
+
+.cart-link {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  text-decoration: none;
+  color: yellow;
+  font-weight: bold;
+  background-color: rgba(0, 0, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.cart-link:hover {
+  background-color: rgba(0, 0, 255, 0.6);
+}
