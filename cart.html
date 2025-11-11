@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Your Cart</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a href="index.html" class="back-button">← Back</a>
+    <h1 class="title">Your Cart</h1>
+  </header>
+
+  <main id="cart-list" style="padding: 20px; text-align: center;"></main>
+
+  <footer>
+    <p>Contact me for orders or questions:</p>
+    <p>Email: <a href="mailto:songuyen150@gmail.com">songuyen150@gmail.com</a></p>
+    <p>Phone: <a href="tel:1-(408)-784-0246">1-(408)-784-0246</a></p>
+  </footer>
+
+  <script>
+    const cartList = document.getElementById("cart-list");
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function renderCart() {
+      cartList.innerHTML = "";
+      if (cart.length === 0) {
+        cartList.innerHTML = "<h2>Your cart is empty.</h2>";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const div = document.createElement("div");
+        div.classList.add("card-item");
+        div.innerHTML = `
+          <img src="${item.image}" alt="">
+          <h3>${item.name}</h3>
+          <p>${item.type}</p>
+          <p>Price: ${item.price}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <button class="remove-btn" data-index="${index}">Remove</button>
+        `;
+        cartList.appendChild(div);
+      });
+
+      // Attach remove button logic
+      document.querySelectorAll(".remove-btn").forEach(btn => {
+        btn.addEventListener("click", e => {
+          const index = e.target.dataset.index;
+          cart.splice(index, 1);
+          localStorage.setItem("cart", JSON.stringify(cart));
+          renderCart();
+        });
+      });
+    }
+
+    renderCart();
+  </script>
+</body>
+</html>
