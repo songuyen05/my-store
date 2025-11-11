@@ -30,6 +30,7 @@ const cards = [
 
 const cardList = document.getElementById("card-list");
 const searchBar = document.getElementById("search-bar");
+const cartLink = document.getElementById("cart-link");
 const modal = document.getElementById("card-modal");
 const modalImg = document.getElementById("modal-img");
 const modalName = document.getElementById("modal-name");
@@ -53,6 +54,7 @@ const filteredCards = category === "all"
 
 // 🛒 Load cart from localStorage or create new
 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+updateCartCount();
 
 function addToCart(card) {
   const existing = cart.find(item => item.name === card.name);
@@ -63,6 +65,17 @@ function addToCart(card) {
   }
   localStorage.setItem("cart", JSON.stringify(cart));
   alert(`${card.name} added to cart!`);
+
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+  if (totalItems > 0) {
+    cartLink.textContent = `View Cart (${totalItems}) 🛒`;
+  } else {
+    cartLink.textContent = "View Cart 🛒";
+  }
 }
 
 // Function to render cards dynamically
