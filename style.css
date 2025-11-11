@@ -312,3 +312,19 @@ footer a:hover {
 .cart-link:hover {
   background-color: rgba(0, 0, 255, 0.6);
 }
+
+.remove-btn {
+  background: #bb1919;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-bottom: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-btn:hover {
+  background: #800000;
+}
