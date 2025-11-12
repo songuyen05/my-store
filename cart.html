@@ -14,6 +14,13 @@
 
   <main id="cart-list" style="padding: 20px; text-align: center;"></main>
 
+    <div id="cart-summary" style="text-align:center; margin-top: 30px;">
+    <h2>Order Summary</h2>
+    <p id="subtotal">Subtotal: $0.00</p>
+    <p id="tax">California Tax (7.25%): $0.00</p>
+    <h3 id="total">Total: $0.00</h3>
+  </div>
+
   <footer>
     <p>Contact me for orders or questions:</p>
     <p>Email: <a href="mailto:songuyen150@gmail.com">songuyen150@gmail.com</a></p>
@@ -22,13 +29,38 @@
 
   <script>
     const cartList = document.getElementById("cart-list");
+    const subtotalEl = document.getElementById("subtotal");
+    const taxEl = document.getElementById("tax");
+    const totalEl = document.getElementById("total");
+
     let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    function calculateTotals() {
+      let subtotal = 0;
+
+      // Extract numeric price values from strings like "$15.00"
+      cart.forEach(item => {
+        const price = parseFloat(item.price.replace('$', '')) || 0;
+        subtotal += price * item.quantity;
+      });
+
+      const taxRate = 0.0725; // California 7.25%
+      const tax = subtotal * taxRate;
+      const total = subtotal + tax;
+
+      subtotalEl.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+      taxEl.textContent = `California Tax (7.25%): $${tax.toFixed(2)}`;
+      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+    }
 
     function renderCart() {
       cartList.innerHTML = "";
       if (cart.length === 0) {
         cartList.innerHTML = "<h2>Your cart is empty.</h2>";
+        document.getElementById("cart-summary").style.display = "none";
         return;
+      } else {
+        document.getElementById("cart-summary").style.display = "block";
       }
 
       cart.forEach((item, index) => {
@@ -52,8 +84,11 @@
           cart.splice(index, 1);
           localStorage.setItem("cart", JSON.stringify(cart));
           renderCart();
+          calculateTotals();
         });
       });
+      
+      calculateTotals();
     }
 
     renderCart();
