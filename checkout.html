@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <a href="cart.html" class="back-button">← Back to Cart</a>
+    <h1 class="title">Checkout</h1>
+  </header>
+
+  <main class="checkout-main">
+    <!-- Cart Summary -->
+    <div id="cart-summary">
+      <h2>Order Summary</h2>
+      <p id="subtotal">Subtotal: $0.00</p>
+      <p id="tax">California Tax (7.25%): $0.00</p>
+      <h3 id="total">Total: $0.00</h3>
+    </div>
+
+    <!-- Checkout Form -->
+    <form id="checkout-form" class="checkout-form">
+      <h2>Payment Information</h2>
+
+      <label for="name">Full Name</label>
+      <input type="text" id="name" name="name" required placeholder="John Doe">
+
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required placeholder="you@example.com">
+
+      <label for="address">Address</label>
+      <input type="text" id="address" name="address" required placeholder="123 Main St">
+
+      <label for="city">City</label>
+      <input type="text" id="city" name="city" required placeholder="San Jose">
+
+      <label for="state">State</label>
+      <select id="state" name="state" required>
+        <option value="">Select State</option>
+        <option value="CA" selected>California</option>
+      </select>
+
+      <label for="zip">ZIP Code</label>
+      <input type="text" id="zip" name="zip" required placeholder="95112">
+
+      <label for="card">Card Number</label>
+      <input type="text" id="card" name="card" required placeholder="1234 5678 9012 3456" maxlength="19">
+
+      <label for="expiry">Expiry Date</label>
+      <input type="text" id="expiry" name="expiry" required placeholder="MM/YY" maxlength="5">
+
+      <label for="cvv">CVV</label>
+      <input type="text" id="cvv" name="cvv" required placeholder="123" maxlength="4">
+
+      <button type="submit" class="checkout-btn">Place Order</button>
+    </form>
+  </main>
+
+  <footer>
+    <p>Contact me for orders or questions:</p>
+    <p>Email: <a href="mailto:songuyen150@gmail.com">songuyen150@gmail.com</a></p>
+    <p>Phone: <a href="tel:1-(408)-784-0246">1-(408)-784-0246</a></p>
+  </footer>
+
+  <script>
+    // Load cart from localStorage
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const subtotalEl = document.getElementById("subtotal");
+    const taxEl = document.getElementById("tax");
+    const totalEl = document.getElementById("total");
+
+    function calculateTotals() {
+      let subtotal = 0;
+      cart.forEach(item => {
+        const price = parseFloat(item.price.replace('$','')) || 0;
+        subtotal += price * item.quantity;
+      });
+
+      const taxRate = 0.0725;
+      const tax = subtotal * taxRate;
+      const total = subtotal + tax;
+
+      subtotalEl.textContent = `Subtotal: $${subtotal.toFixed(2)}`;
+      taxEl.textContent = `California Tax (7.25%): $${tax.toFixed(2)}`;
+      totalEl.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    calculateTotals();
+
+    // Handle form submission
+    const form = document.getElementById("checkout-form");
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+      alert("Thank you! Your order has been placed (not actually processed).");
+      localStorage.removeItem("cart"); // Clear cart
+      window.location.href = "index.html"; // Redirect to main page
+    });
+  </script>
+</body>
+</html>
