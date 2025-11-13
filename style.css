@@ -328,3 +328,62 @@ footer a:hover {
 .remove-btn:hover {
   background: #800000;
 }
+
+main.checkout-main {
+  max-width: 500px;
+  margin: 40px auto;
+  background: white;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+main.checkout-main h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.checkout-form label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
+
+.checkout-form input,
+.checkout-form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.checkout-btn {
+  background: #bb1919;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 25px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  width: 100%;
+}
+
+.checkout-btn:hover {
+  background: #800000;
+}
+
+#cart-summary {
+  text-align: center;
+  margin-top: 30px;
+}
+
+@media (max-width: 600px) {
+  main.checkout-main {
+    margin: 20px;
+    padding: 20px;
+  }
+}
