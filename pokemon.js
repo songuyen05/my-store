@@ -91,6 +91,9 @@ function renderCards(list) {
       ? `<div class="sold-out">SOLD OUT</div>`
       : "";
 
+    // Insert price above quantity
+    const priceHTML = `<div class="price">Price: ${card.price}</div>`;
+
       // Insert quantity below the card name
     const quantityHTML = card.quantity > 0
       ? `<div class="quantity">Quantity: ${card.quantity}</div>`
@@ -102,6 +105,7 @@ function renderCards(list) {
         <img src="${card.image}" alt="">
       </div>
       <h3>${card.name}</h3>
+      ${priceHTML}
       ${quantityHTML}
       <button class="view-btn">View</button>
       <button class="cart-btn" ${card.quantity === 0 ? "disabled" : ""}>Add to Cart</button>
