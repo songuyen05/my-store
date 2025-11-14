@@ -387,3 +387,15 @@ main.checkout-main h2 {
     padding: 20px;
   }
 }
+
+.price {
+  font-weight: bold;
+  margin-top: 5px;
+  color: #33cc1fbb;
+}
+
+.quantity {
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #333;
+}
