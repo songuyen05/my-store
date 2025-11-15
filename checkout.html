@@ -90,13 +90,76 @@
 
     calculateTotals();
 
-    // Handle form submission
+    const errorMsg = document.getElementById("error-msg");
+
+    // ------- CREDIT CARD VALIDATION (ADDED) --------
+    function luhnCheck(num) {
+      num = num.replace(/\s+/g, "");
+      let sum = 0;
+      let shouldDouble = false;
+
+      for (let i = num.length - 1; i >= 0; i--) {
+        let digit = parseInt(num[i]);
+
+        if (shouldDouble) {
+          digit *= 2;
+          if (digit > 9) digit -= 9;
+        }
+        sum += digit;
+        shouldDouble = !shouldDouble;
+      }
+      return sum % 10 === 0;
+    }
+
+    function validateExpiry(exp) {
+      if (!/^\d{2}\/\d{2}$/.test(exp)) return false;
+
+      let [month, year] = exp.split("/").map(n => parseInt(n));
+      if (month < 1 || month > 12) return false;
+
+      let now = new Date();
+      let currentYear = now.getFullYear() % 100; 
+      let currentMonth = now.getMonth() + 1;
+
+      if (year < currentYear) return false;
+      if (year === currentYear && month < currentMonth) return false;
+
+      return true;
+    }
+
+    // ----- FORM SUBMIT -----
     const form = document.getElementById("checkout-form");
     form.addEventListener("submit", e => {
       e.preventDefault();
+
+      const card = document.getElementById("card").value;
+      const expiry = document.getElementById("expiry").value;
+      const cvv = document.getElementById("cvv").value;
+
+      // Validate Card Number
+      if (!luhnCheck(card)) {
+        errorMsg.textContent = "Invalid card number.";
+        return;
+      }
+
+      // Validate Expiry
+      if (!validateExpiry(expiry)) {
+        errorMsg.textContent = "Invalid or expired expiry date.";
+        return;
+      }
+
+      // Validate CVV (3–4 digits)
+      if (!/^\d{3,4}$/.test(cvv)) {
+        errorMsg.textContent = "Invalid CVV.";
+        return;
+      }
+
+      errorMsg.textContent = "";
+
       alert("Thank you! Your order has been placed (not actually processed).");
-      localStorage.removeItem("cart"); // Clear cart
-      window.location.href = "index.html"; // Redirect to main page
+
+      localStorage.removeItem("cart");
+      window.location.href = "index.html";
     });
   </script>
 </body>
