@@ -420,3 +420,14 @@ main.checkout-main h2 {
   font-size: 0.95rem;
   font-weight: bold;
 }
+
+.venmo-text {
+  margin-top: 10px;
+  font-size: 1rem;
+}
+
+.venmo-note {
+  font-size: 0.9rem;
+  margin-top: 5px;
+  color: #555;
+}

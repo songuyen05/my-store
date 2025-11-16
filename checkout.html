@@ -23,37 +23,19 @@
 
     <!-- Checkout Form -->
     <form id="checkout-form" class="checkout-form">
-      <h2>Payment Information</h2>
+      <h2>Payment Method</h2>
 
-      <label for="name">Full Name</label>
-      <input type="text" id="name" name="name" required placeholder="John Doe">
+      <p class="venmo-text">
+        This store currently accepts <strong>Venmo only</strong> for payments.
+      </p>
 
-      <label for="email">Email</label>
-      <input type="email" id="email" name="email" required placeholder="you@example.com">
+      <label for="venmo">Your Venmo Username</label>
+      <input type="text" id="venmo" name="venmo" required placeholder="@yourname">
 
-      <label for="address">Address</label>
-      <input type="text" id="address" name="address" required placeholder="123 Main St">
+      <p class="venmo-note">
+        After placing your order, you will receive instructions to send payment via Venmo.
+      </p>
 
-      <label for="city">City</label>
-      <input type="text" id="city" name="city" required placeholder="San Jose">
-
-      <label for="state">State</label>
-      <select id="state" name="state" required>
-        <option value="">Select State</option>
-        <option value="CA" selected>California</option>
-      </select>
-
-      <label for="zip">ZIP Code</label>
-      <input type="text" id="zip" name="zip" required placeholder="95112">
-
-      <label for="card">Card Number</label>
-      <input type="text" id="card" name="card" required placeholder="1234 5678 9012 3456" maxlength="19">
-
-      <label for="expiry">Expiry Date</label>
-      <input type="text" id="expiry" name="expiry" required placeholder="MM/YY" maxlength="5">
-
-      <label for="cvv">CVV</label>
-      <input type="text" id="cvv" name="cvv" required placeholder="123" maxlength="4">
 
       <button type="submit" class="checkout-btn">Place Order</button>
     </form>
@@ -156,7 +138,8 @@
 
       errorMsg.textContent = "";
 
-      alert("Thank you! Your order has been placed (not actually processed).");
+      alert("Order placed! Please send the total amount via Venmo to @YourVenmoName. Order will not ship until payment is received.");
+
 
       localStorage.removeItem("cart");
       window.location.href = "index.html";
