@@ -431,3 +431,8 @@ main.checkout-main h2 {
   margin-top: 5px;
   color: #555;
 }
+
+.venmo-button img {
+  height: 22px;   /* adjust this to make it bigger/smaller */
+  width: auto;
+}
