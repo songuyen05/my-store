@@ -432,7 +432,27 @@ main.checkout-main h2 {
   color: #555;
 }
 
+.venmo-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  background-color: #055d97; /* Venmo blue */
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+
 .venmo-button img {
   height: 22px;   /* adjust this to make it bigger/smaller */
   width: auto;
+}
+
+.venmo-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.25);
 }
