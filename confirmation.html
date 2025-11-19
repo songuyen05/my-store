@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Placed</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <header>
+    <h1 class="title">Order Confirmed!</h1>
+  </header>
+
+  <main class="checkout-main">
+    <h2>Thank You For Your Order</h2>
+
+    <p>Your order has been placed successfully.</p>
+
+    <p><strong>Total Due:</strong> <span id="total-due">$0.00</span></p>
+
+    <div class="payment-section">
+      <p>Please send your payment via Venmo to:</p>
+
+      <a href="https://venmo.com/Son-Nguyen-531" target="_blank" class="venmo-button">
+        <img src="images/VenmoLogo.png" alt="Venmo" />
+        @Son-Nguyen-531
+      </a>
+
+      <p>Once payment is received, your order will be processed and shipped.</p>
+    </div>
+
+    <button onclick="window.location.href='index.html'" class="checkout-btn">
+      Return to Home
+    </button>
+  </main>
+
+</body>
+</html>
