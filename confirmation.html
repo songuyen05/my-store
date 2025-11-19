@@ -6,6 +6,11 @@
   <title>Order Placed</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+<script>
+  const finalTotal = localStorage.getItem("finalTotal") || "0.00";
+  document.getElementById("total-due").textContent = "$" + finalTotal;
+  localStorage.removeItem("finalTotal");
+</script>
 <body>
 
   <header>
