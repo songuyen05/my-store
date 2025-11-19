@@ -91,15 +91,14 @@
 
     const total = totalEl.textContent.replace("Total: $", "");
 
-    alert(
-      `Order placed!\n\n` +
-      `Please send **$${total}** via Venmo to @Son-Nguyen-531.\n` +
-      `Your order will not ship until payment is received.\n\n` +
-      `You entered: ${venmoUser}`
-    );
+    // Save the final total so the confirmation page can display it
+    localStorage.setItem("finalTotal", total);
 
+    // Clear cart
     localStorage.removeItem("cart");
-    window.location.href = "index.html";
+
+    // Redirect to confirmation page
+    window.location.href = "confirmation.html";
   });
   </script>
 </body>
