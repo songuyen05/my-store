@@ -451,3 +451,47 @@ main.checkout-main h2 {
 .payment-buttons a {
   text-decoration: none;
 }
+
+/* ===== Fade-In Animation ===== */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Optional: delay stagger effect for elements */
+.fade-delay-1 {
+  animation-delay: 0.2s;
+}
+
+.fade-delay-2 {
+  animation-delay: 0.4s;
+}
+
+.fade-delay-3 {
+  animation-delay: 0.6s;
+}
+
+/* Smooth glow effect for confirmation main card */
+.confirmation-card {
+  animation: cardPop 0.6s ease-out;
+}
+
+@keyframes cardPop {
+  0% {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
