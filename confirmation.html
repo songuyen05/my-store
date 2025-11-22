@@ -6,11 +6,6 @@
   <title>Order Placed</title>
   <link rel="stylesheet" href="style.css" />
 </head>
-<script>
-  const finalTotal = localStorage.getItem("finalTotal") || "0.00";
-  document.getElementById("total-due").textContent = "$" + finalTotal;
-  localStorage.removeItem("finalTotal");
-</script>
 <body>
 
   <header>
@@ -27,7 +22,7 @@
     <p class="fade-in fade-delay-2">
       <strong>Order Number:</strong> <span id="order-number"></span>
     </p>
-    
+
     <div class="payment-section fade-in fade-delay-3">
       <p>Please send your payment via Venmo to:</p>
 
@@ -43,6 +38,33 @@
       Return to Home
     </button>
   </main>
+  <script>
+    // Pull total from previous page
+    const totalDue = localStorage.getItem("lastOrderTotal") || "0.00";
+    document.getElementById("total-due").textContent = `$${totalDue}`;
 
+    // Generate a unique order number like POK-382194
+    function generateOrderNumber() {
+      const prefix = "POK";
+      const randomNum = Math.floor(100000 + Math.random() * 900000);
+      return `${prefix}-${randomNum}`;
+    }
+
+    // If order number already exists, reuse it. Otherwise generate one.
+    let orderNum = localStorage.getItem("orderNumber");
+    if (!orderNum) {
+      orderNum = generateOrderNumber();
+      localStorage.setItem("orderNumber", orderNum);
+    }
+
+    // Display order number
+    document.getElementById("order-number").textContent = orderNum;
+
+    // Clear order data when leaving page
+    window.addEventListener("beforeunload", () => {
+      localStorage.removeItem("orderNumber");
+      localStorage.removeItem("lastOrderTotal");
+    });
+  </script>
 </body>
 </html>
