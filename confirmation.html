@@ -12,7 +12,7 @@
     <h1 class="title">Order Confirmed!</h1>
   </header>
 
-  <main class="checkout-main confirmation-card fade-in">
+  <main class="checkout-main confirmation-card">
     <h2 class="fade-in fade-delay-1">Thank You For Your Order</h2>
 
     <p class="fade-in fade-delay-2">Your order has been placed successfully.</p>
@@ -62,9 +62,9 @@
 
     // Clear order data when leaving page
     window.addEventListener("beforeunload", () => {
-      localStorage.removeItem("orderNumber");
-      localStorage.removeItem("lastOrderTotal");
-    });
+    localStorage.removeItem("orderNumber");
+    localStorage.removeItem("lastOrderTotal");
+  });
   </script>
 </body>
 </html>
