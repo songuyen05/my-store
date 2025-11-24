@@ -60,6 +60,10 @@
     const taxEl = document.getElementById("tax");
     const totalEl = document.getElementById("total");
 
+    if (cart.length === 0) {
+      window.location.href = "cart.html";
+    }
+
     function calculateTotals() {
       let subtotal = 0;
       cart.forEach(item => {
