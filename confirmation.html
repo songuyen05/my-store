@@ -34,7 +34,7 @@
       <p>Once payment is received, your order will be processed and shipped.</p>
     </div>
 
-    <button onclick="window.location.href='index.html'" class="checkout-btn fade-in fade-delay-3">
+    <button id="return-home" class="checkout-btn fade-in fade-delay-3">
       Return to Home
     </button>
   </main>
@@ -61,10 +61,11 @@
     document.getElementById("order-number").textContent = orderNum;
 
     // Clear order data when leaving page
-    window.addEventListener("beforeunload", () => {
-    localStorage.removeItem("orderNumber");
-    localStorage.removeItem("finalTotal");
-  });
+    document.getElementById("return-home").addEventListener("click", () => {
+      localStorage.removeItem("orderNumber");
+      localStorage.removeItem("finalTotal");
+      window.location.href = "index.html";
+    });
   </script>
 </body>
 </html>
