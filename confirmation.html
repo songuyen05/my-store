@@ -40,7 +40,7 @@
   </main>
   <script>
     // Pull total from previous page
-    const totalDue = localStorage.getItem("lastOrderTotal") || "0.00";
+    const totalDue = localStorage.getItem("finalTotal") || "0.00";
     document.getElementById("total-due").textContent = `$${totalDue}`;
 
     // Generate a unique order number like POK-382194
@@ -63,7 +63,7 @@
     // Clear order data when leaving page
     window.addEventListener("beforeunload", () => {
     localStorage.removeItem("orderNumber");
-    localStorage.removeItem("lastOrderTotal");
+    localStorage.removeItem("finalTotal");
   });
   </script>
 </body>
