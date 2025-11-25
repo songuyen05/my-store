@@ -496,3 +496,26 @@ main.checkout-main h2 {
     opacity: 1;
   }
 }
+
+.success-check {
+  font-size: 4rem;
+  color: #33cc1fbb;
+  text-align: center;
+  margin-bottom: 15px;
+  opacity: 0;
+  animation: popSuccess 0.8s ease-out forwards;
+}
+
+@keyframes popSuccess {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
+}
