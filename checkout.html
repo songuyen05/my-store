@@ -82,21 +82,156 @@
 
     calculateTotals();
 
-    // ----- FORM SUBMIT -----
-    const form = document.getElementById("checkout-form");
-    form.addEventListener("submit", e => {
-      e.preventDefault();
+    // ----- NEW UI: Venmo pay + manual verification UI -----
+  // Insert a pay button and verification UI dynamically below the .payment-buttons div
+  const paymentButtons = document.querySelector(".payment-buttons");
 
-    const venmoUser = document.getElementById("venmo").value.trim();
-    if (venmoUser === "") {
+  // Create Pay with Venmo button (opens venmo deep link on mobile, fallback to web)
+  const payBtn = document.createElement("a");
+  payBtn.setAttribute("href", "#");
+  payBtn.className = "venmo-button";
+  payBtn.target = "_blank";
+  payBtn.id = "pay-with-venmo";
+  payBtn.innerHTML = `<img src="images/VenmoLogo.png" alt="Venmo" /> Pay via Venmo`;
+
+  // Create manual verification UI
+  const verifyContainer = document.createElement("div");
+  verifyContainer.style.marginTop = "12px";
+  verifyContainer.innerHTML = `
+    <label for="venmo-receipt" style="display:block; margin-bottom:6px; font-weight:700;">Paste Venmo payment link / transaction ID here</label>
+    <input type="text" id="venmo-receipt" placeholder="https://venmo.com/..." style="width:100%; padding:8px; border-radius:6px; border:1px solid #ccc;" />
+    <div style="display:flex; gap:8px; margin-top:8px; justify-content:center;">
+      <button type="button" id="verify-payment" style="padding:8px 12px; border-radius:8px; background:#055d97; color:white; border:none; cursor:pointer;">Verify Payment (manual)</button>
+      <button type="button" id="paid-but-not-verified" style="padding:8px 12px; border-radius:8px; background:#bbb; color:#222; border:none; cursor:pointer;">I already paid — request review</button>
+    </div>
+    <p id="verify-msg" style="margin-top:8px; color:#b00; font-weight:700; text-align:center; display:none;"></p>
+  `;
+
+  paymentButtons.appendChild(payBtn);
+  paymentButtons.appendChild(verifyContainer);
+
+  // Disable place order button initially
+  const placeOrderBtn = document.querySelector(".checkout-btn");
+  placeOrderBtn.disabled = true;
+  placeOrderBtn.style.opacity = "0.6";
+  placeOrderBtn.title = "You must verify payment before placing the order.";
+
+  // Build venmo link when clicking payBtn
+  payBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    // Get numeric total
+    const totalText = totalEl.textContent.replace("Total: $", "");
+    const amount = parseFloat(totalText) || 0;
+
+    // Your Venmo username (receiver) — set to your account
+    const VENMO_USER = "Son-Nguyen-531"; // change if needed
+
+    // Build deep link for mobile, fallback to web url
+    const note = encodeURIComponent("Order from POK Store - total $" + amount.toFixed(2));
+    // Mobile deep link
+    const deepLink = `venmo://paycharge?txn=pay&recipients=${VENMO_USER}&amount=${amount.toFixed(2)}&note=${note}`;
+    // Web fallback link (may open Venmo web pay)
+    const webLink = `https://venmo.com/${VENMO_USER}?txn=pay&amount=${amount.toFixed(2)}&note=${note}`;
+
+    // Try opening the deep link first by setting location to it (works on mobile).
+    // Because of browser restrictions we open webLink in a new tab and inform the user to use mobile if needed.
+    // We'll open the web link in a new tab:
+    window.open(webLink, "_blank");
+    // Also attempt deep link (this may or may not work depending on platform)
+    setTimeout(() => { window.location = deepLink; }, 200);
+  });
+
+  // Manual "verify" (client-side simple check)
+  const verifyBtn = document.getElementById("verify-payment");
+  const receiptInput = document.getElementById("venmo-receipt");
+  const verifyMsg = document.getElementById("verify-msg");
+  const requestReviewBtn = document.getElementById("paid-but-not-verified");
+
+  function enablePlaceOrder() {
+    placeOrderBtn.disabled = false;
+    placeOrderBtn.style.opacity = "1";
+    placeOrderBtn.title = "";
+    // Mark as "paid" locally so confirmation page knows
+    localStorage.setItem("paidVerified", "true");
+  }
+
+  function disablePlaceOrder() {
+    placeOrderBtn.disabled = true;
+    placeOrderBtn.style.opacity = "0.6";
+    placeOrderBtn.title = "You must verify payment before placing the order.";
+    localStorage.removeItem("paidVerified");
+  }
+
+  // Simple client-side validation of pasted receipt/URL:
+  // Accept if it looks like a Venmo URL or non-empty ID (this is only a format check).
+  function looksLikeVenmoReceipt(val) {
+    if (!val) return false;
+    const trimmed = val.trim();
+    // crude heuristics:
+    if (trimmed.startsWith("https://venmo.com/") || trimmed.startsWith("http://venmo.com/")) return true;
+    if (/^venmo:\/\/|venmo\.com\/charge|txn=pay/.test(trimmed)) return true;
+    // accept short alphanumeric-looking transaction IDs (length 6-40)
+    if (/^[A-Za-z0-9\-\_]{6,40}$/.test(trimmed)) return true;
+    return false;
+  }
+
+  verifyBtn.addEventListener("click", () => {
+    const val = receiptInput.value.trim();
+    verifyMsg.style.display = "none";
+    if (!looksLikeVenmoReceipt(val)) {
+      verifyMsg.style.display = "block";
+      verifyMsg.style.color = "#b00";
+      verifyMsg.textContent = "Please paste a Venmo payment URL or transaction ID. (If you paid, paste the payment link or ID.)";
+      disablePlaceOrder();
+      return;
+    }
+
+    // CLIENT-SIDE: we cannot truly verify the payment without a backend.
+    // For now, assume this is a user-provided receipt and enable the place order button.
+    // (If you want stronger guarantees, implement server verification: instructions below.)
+    verifyMsg.style.display = "block";
+    verifyMsg.style.color = "#0a6";
+    verifyMsg.textContent = "Receipt looks valid. You can now place the order. (Note: this is client-side verification only.)";
+    enablePlaceOrder();
+  });
+
+  // If user claims they already paid and want review, enable place order but mark it for manual review
+  requestReviewBtn.addEventListener("click", () => {
+    verifyMsg.style.display = "block";
+    verifyMsg.style.color = "#b60";
+    verifyMsg.textContent = "You asked for manual review. Place order to save request; the order will be flagged for manual verification.";
+    // Mark a manual review flag in localStorage so confirmation page can show a message
+    localStorage.setItem("manualReviewRequested", "true");
+    enablePlaceOrder();
+  });
+
+  // ----- FORM SUBMIT -----
+  const form = document.getElementById("checkout-form");
+  form.addEventListener("submit", e => {
+    e.preventDefault();
+
+    // Only allow if paidVerified (client-side) or manualReviewRequested
+    const paidVerified = localStorage.getItem("paidVerified") === "true";
+    const manualReview = localStorage.getItem("manualReviewRequested") === "true";
+
+    if (!paidVerified && !manualReview) {
+      alert("You must verify payment (paste your Venmo transaction link/ID and click Verify) before placing the order.");
+      return;
+    }
+
+    const venmoUserInput = document.getElementById("venmo").value.trim();
+    if (venmoUserInput === "") {
       alert("Please enter your Venmo username.");
       return;
     }
 
     const total = totalEl.textContent.replace("Total: $", "");
-
     // Save the final total so the confirmation page can display it
     localStorage.setItem("finalTotal", total);
+
+    // Save the receipt string (if provided) so you can review it
+    const receiptText = document.getElementById("venmo-receipt").value.trim();
+    if (receiptText) localStorage.setItem("venmoReceipt", receiptText);
 
     // Clear cart
     localStorage.removeItem("cart");
@@ -104,6 +239,11 @@
     // Redirect to confirmation page
     window.location.href = "confirmation.html";
   });
+
+  // On page load: if the user already verified in this browser, re-enable
+  if (localStorage.getItem("paidVerified") === "true" || localStorage.getItem("manualReviewRequested") === "true") {
+    enablePlaceOrder();
+  }
   </script>
 </body>
 </html>
