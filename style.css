@@ -542,3 +542,11 @@ main.checkout-main h2 {
   from { opacity: 0; transform: translateY(8px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+.zelle-box {
+  background: #f0f6ff;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid #c3d7ff;
+  margin-bottom: 12px;
+}
