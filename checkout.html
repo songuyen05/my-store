@@ -84,6 +84,21 @@
 
     calculateTotals();
 
+    form.addEventListener("submit", e => {
+      e.preventDefault();
+
+      const total = totalEl.textContent.replace("Total: $", "");
+
+      // Save the final order total
+      localStorage.setItem("finalTotal", total);
+
+      // Clear cart
+      localStorage.removeItem("cart");
+
+      // Redirect to confirmation page
+      window.location.href = "confirmation.html";
+    });
+
   </script>
 </body>
 </html>
