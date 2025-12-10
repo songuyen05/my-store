@@ -1,32 +1,45 @@
-const cards = [
-  {
-    name: "Charizard",
-    image: "images/charizard.jpg",
-    type: "EX / Fire",
-    price: "$25.99",
-    desc: "A powerful Fire-type Pokémon with blazing attacks.",
-    category: "exmega",
-    quantity: 3
-  },
-  {
-    name: "Pikachu Full Art",
-    image: "images/pikachu_fullart.jpg",
-    type: "Full Art / Electric",
-    price: "$15.00",
-    desc: "Full Art Pikachu with stunning artwork and great condition.",
-    category: "fullart",
-    quantity: 0
-  },
-  {
-    name: "Squirtle",
-    image: "images/squirtle.jpg",
-    type: "Water",
-    price: "$5.00",
-    desc: "A classic Water-type Pokémon card.",
-    category: "normal",
-    quantity: 1
-  }
-];
+let storedCards = JSON.parse(localStorage.getItem("cards"));
+
+if (!storedCards) {
+  storedCards = [
+    {
+      id: 1,
+      name: "Charizard",
+      image: "images/charizard.jpg",
+      type: "EX / Fire",
+      price: "$25.99",
+      desc: "A powerful Fire-type Pokémon with blazing attacks.",
+      category: "exmega",
+      quantity: 3
+    },
+    {
+      id: 2,
+      name: "Pikachu Full Art",
+      image: "images/pikachu_fullart.jpg",
+      type: "Full Art / Electric",
+      price: "$15.00",
+      desc: "Full Art Pikachu with stunning artwork and great condition.",
+      category: "fullart",
+      quantity: 0
+    },
+    {
+      id: 3,
+      name: "Squirtle",
+      image: "images/squirtle.jpg",
+      type: "Water",
+      price: "$5.00",
+      desc: "A classic Water-type Pokémon card.",
+      category: "normal",
+      quantity: 1
+    }
+  ];
+
+  localStorage.setItem("cards", JSON.stringify(storedCards));
+}
+
+// Use storedCards as your main list
+const cards = storedCards;
+
 
 const cardList = document.getElementById("card-list");
 const searchBar = document.getElementById("search-bar");
