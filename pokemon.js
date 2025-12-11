@@ -99,18 +99,16 @@ function renderCards(list) {
     const div = document.createElement("div");
     div.classList.add("card-item");
 
-    // Show SOLD OUT overlay if quantity is 0
+    // SOLD OUT overlay
     const soldOutHTML = card.quantity === 0
       ? `<div class="sold-out">SOLD OUT</div>`
       : "";
 
-    // Insert price above quantity
+    // Price
     const priceHTML = `<div class="price">Price: ${card.price}</div>`;
 
-      // Insert quantity below the card name
-    const quantityHTML = card.quantity > 0
-      ? `<div class="quantity">Quantity: ${card.quantity}</div>`
-      : "";
+    // Quantity live display
+    const quantityHTML = `<div class="quantity">Quantity: ${card.quantity}</div>`;
 
     div.innerHTML = `
       <div class="image-container">
@@ -125,22 +123,24 @@ function renderCards(list) {
     `;
     cardList.appendChild(div);
 
-    // Add event listener for View button
-    if (card.quantity > 0) {
-      div.querySelector(".view-btn").addEventListener("click", () => {
-        modalImg.src = card.image;
-        modalName.textContent = card.name;
-        modalType.textContent = `Type: ${card.type}`;
-        modalPrice.textContent = `Price: ${card.price}`;
-        modalDesc.textContent = card.desc;
-        modal.style.display = "flex";
-      });
+    // View button
+    div.querySelector(".view-btn").addEventListener("click", () => {
+      modalImg.src = card.image;
+      modalName.textContent = card.name;
+      modalType.textContent = `Type: ${card.type}`;
+      modalPrice.textContent = `Price: ${card.price}`;
+      modalDesc.textContent = card.desc;
+      modal.style.display = "flex";
+    });
 
-      const cartBtn = div.querySelector(".cart-btn");
+    // Add to Cart
+    const cartBtn = div.querySelector(".cart-btn");
+    if (card.quantity > 0) {
       cartBtn.addEventListener("click", () => addToCart(card));
     }
   });
 }
+
 
 // Initial render
 renderCards(filteredCards);
