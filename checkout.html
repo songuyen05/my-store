@@ -89,9 +89,23 @@
     form.addEventListener("submit", e => {
       e.preventDefault();
 
-      const total = totalEl.textContent.replace("Total: $", "");
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      let products = JSON.parse(localStorage.getItem("products")) || [];
+
+      cart.forEach(cartItem => {
+        const product = products.find(p => p.id === cartItem.id);
+
+        if (product) {
+          product.stock -= cartItem.quantity;
+
+          if (product.stock < 0) product.stock = 0; // safety
+        }
+      });
+
+      localStorage.setItem("products", JSON.stringify(products));
 
       // Save the final order total
+      const total = totalEl.textContent.replace("Total: $", "");
       localStorage.setItem("finalTotal", total);
 
       // Clear cart
